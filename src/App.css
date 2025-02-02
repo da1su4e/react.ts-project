@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+a, a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-style: inherit;
+  font-weight: 400;
+}
+
+body {
+  font-family: "Poppins", serif;
+  color: #333;
+}
+
+.logo__text {
+  font-family: "Manrope", serif;
+}
