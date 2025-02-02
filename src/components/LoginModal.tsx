@@ -3,13 +3,13 @@ import google from "../assets/google.svg";
 import facebook from "../assets/facebook.svg";
 import apple from "../assets/apple.svg";
 
-interface ModalProps {
+interface LoginProps {
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
     isRegisterOpen: boolean;
     setIsRegisterOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const LoginModal: React.FC<ModalProps> = ({ setIsModalOpen, isRegisterOpen, setIsRegisterOpen }) => {
+export const LoginModal: React.FC<LoginProps> = ({ setIsModalOpen, isRegisterOpen, setIsRegisterOpen }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
@@ -84,19 +84,19 @@ export const LoginModal: React.FC<ModalProps> = ({ setIsModalOpen, isRegisterOpe
                 <div className="flex w-full justify-between gap-2 mt-6">
                     <button
                         className="flex flex-grow border border-[#DFDFDF] rounded-xl justify-center items-center cursor-pointer"
-                        onClick={() => setIsModalOpen(false)} // Закриваємо модалку
+                        onClick={() => setIsModalOpen(false)}
                     >
                         <img src={google} alt="Google" className="py-5" />
                     </button>
                     <button
                         className="flex flex-grow border border-[#DFDFDF] rounded-xl justify-center items-center cursor-pointer"
-                        onClick={() => setIsModalOpen(false)} // Закриваємо модалку
+                        onClick={() => setIsModalOpen(false)}
                     >
                         <img src={facebook} alt="Facebook" className="py-5" />
                     </button>
                     <button
                         className="flex flex-grow border border-[#DFDFDF] rounded-xl justify-center items-center cursor-pointer"
-                        onClick={() => setIsModalOpen(false)} // Закриваємо модалку
+                        onClick={() => setIsModalOpen(false)}
                     >
                         <img src={apple} alt="Apple" className="py-5" />
                     </button>
@@ -107,7 +107,7 @@ export const LoginModal: React.FC<ModalProps> = ({ setIsModalOpen, isRegisterOpe
                     <span className="text-[#171717]">Terms of Service</span>.
                 </p>
                 <button
-                    onClick={() => setIsModalOpen(false)} // Закриваємо модалку
+                    onClick={() => setIsModalOpen(false)}
                     className="absolute top-6 right-6 bg-[#1717171A] text-[#3A3A3C] hover:text-[#262628] px-3.5 py-2 rounded-full"
                 >
                     <i className="fa-solid fa-x"></i>

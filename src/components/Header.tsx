@@ -1,6 +1,8 @@
 import { useState, FormEvent } from "react";
 import { LoginModal } from "./LoginModal";
 import { RegisterModal } from "./RegisterModal";
+import { VerificationModal } from "./VerificationModal";
+import { SuccessModal } from "./SuccessModal";
 import logo from "../assets/logo.svg";
 
 export const Home: React.FC = () => {
@@ -26,7 +28,6 @@ export const Home: React.FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
         const form = e.target as HTMLFormElement;
         const username = (form.username as HTMLInputElement).value.trim();
         const email = (form.email as HTMLInputElement).value.trim();
@@ -38,6 +39,7 @@ export const Home: React.FC = () => {
             setIsVerificationOpen(true);
         }
     };
+
 
     const handleCodeChange = (e) => {
         const inputCode = e.target.value;
@@ -144,81 +146,18 @@ export const Home: React.FC = () => {
                     {isRegisterOpen && 
                         <RegisterModal
                             setIsRegisterOpen={setIsRegisterOpen}
+                            setIsModalOpen={setIsModalOpen}
+                            setIsVerificationOpen={setIsVerificationOpen}
                         />
                     }
-                    {isVerificationOpen && (
-                        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm z-50">
-                            <div className="bg-white p-10 shadow-lg relative rounded-[32px]">
-                                <p className="text-2xl text-[#171717] font-semibold">Email verification</p>
-                                <p className="text-[#000000] mt-3">
-                                    Please enter the 6-digit verification code that was sent to <br />
-                                    {email || "name@gmail.com"}
-                                    . The code is valid for 30 minutes.
-                                </p>
-                                <form onSubmit={handleVerifySubmit} className="flex flex-col mt-10">
-                                    <div className="flex flex-col gap-2.5">
-                                        <p className="text-lg text-[#1B1B29]">Email verification code</p>
-                                        <div className="relative">
-                                            <input
-                                                type="text"
-                                                className="pl-6 pr-24 py-3.5 rounded-xl outline-none bg-[#F1F4F8] w-[460px]"
-                                                placeholder="XXXX"
-                                                required
-                                                value={code}
-                                                onChange={handleCodeChange}
-                                                maxLength={4}
-                                                inputMode="numeric"
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={resendCode}
-                                                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#1749B3] font-semibold pr-6"
-                                                disabled={isTimerRunning}
-                                            >
-                                                {isTimerRunning ? `${timer}s` : "Resend code"}
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <button
-                                        type="submit"
-                                        className="bg-[#1749B3] rounded-xl cursor-pointer text-white font-bold py-4 w-full mt-10"
-                                        disabled={code.length !== 4}
-                                    >
-                                        Sign up
-                                    </button>
-                                </form>
-                                <p className="font-bold text-[#1749B3] text-lg mt-7">Didn’t receive the code?</p>
-                                <button 
-                                    onClick={() => setIsRegisterOpen(false)} 
-                                    className="absolute top-6 right-6 bg-[#1717171A] text-[#3A3A3C] hover:text-[#262628] px-3.5 py-2 rounded-full"
-                                >
-                                    <i className="fa-solid fa-x"></i>
-                                </button>
-                            </div>
-                        </div>
-                    )}
-                    {isSuccessfulOpen && (
-                        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm z-50">
-                            <div className="bg-white p-30 shadow-lg relative rounded-[32px]">
-                                <p className="text-2xl text-[#171717] font-semibold">Successful registration</p>
-                                <p className="text-[#000000] mt-3">
-                                By optimizing our work and using internal tools, we were <br /> able to lower the prices while keeping the highest <br /> possible.
-                                </p>
-                                <button
-                                    onClick={() => setIsSuccessfulOpen(false)} 
-                                    className="bg-[#1749B3] rounded-xl cursor-pointer text-white font-bold py-4 w-full mt-10"
-                                >
-                                    Continue work
-                                </button>
-                                <button 
-                                    onClick={() => setIsSuccessfulOpen(false)} 
-                                    className="absolute top-6 right-6 bg-[#1717171A] text-[#3A3A3C] hover:text-[#262628] px-3.5 py-2 rounded-full"
-                                >
-                                    <i className="fa-solid fa-x"></i>
-                                </button>
-                            </div>
-                        </div>
-                    )}
+                    {isVerificationOpen && 
+                        <VerificationModal
+                            email={email}
+                            setIsVerificationOpen={setIsVerificationOpen}
+                            setIsSuccessfulOpen={setIsSuccessfulOpen}
+                        />
+                    }
+                    {isSuccessfulOpen && <SuccessModal setIsSuccessfulOpen={setIsSuccessfulOpen} />}
                 </div>
             </nav>
         </header>

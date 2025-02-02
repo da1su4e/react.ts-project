@@ -3,12 +3,13 @@ import google from "../assets/google.svg";
 import facebook from "../assets/facebook.svg";
 import apple from "../assets/apple.svg";
 
-interface ModalProps {
+interface RegisterProps {
     setIsRegisterOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsVerificationOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const RegisterModal: React.FC<ModalProps> = ({ setIsRegisterOpen, setIsModalOpen }) => {
+export const RegisterModal: React.FC<RegisterProps> = ({ setIsRegisterOpen, setIsModalOpen, setIsVerificationOpen }) => {
     const [email, setEmail] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
@@ -27,6 +28,7 @@ export const RegisterModal: React.FC<ModalProps> = ({ setIsRegisterOpen, setIsMo
 
         if (username && email && password.length >= 8 && isChecked) {
             setIsRegisterOpen(false);
+            setIsVerificationOpen(true);
         }
     };
 
