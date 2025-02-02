@@ -15,7 +15,7 @@ export const LoginModal: React.FC<ModalProps> = ({ setIsModalOpen, isRegisterOpe
     return (
         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm z-50">
             <div className="bg-white p-10 rounded-[32px] shadow-lg relative">
-                <p className="text-3xl mb-3 font-bold">Log in</p>
+                <p className="text-2xl mb-3 font-bold">Log in</p>
                 <p className="text-[#0F0F0F]">
                     New user?{" "}
                     <button
