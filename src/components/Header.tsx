@@ -1,10 +1,12 @@
-import { useState, FormEvent } from "react";
-import { LoginModal } from "./LoginModal";
-import { RegisterModal } from "./RegisterModal";
-import { VerificationModal } from "./VerificationModal";
-import { SuccessModal } from "./SuccessModal";
+import { useState } from "react";
+import { LoginModal } from "./modals/LoginModal";
+import { RegisterModal } from "./modals/RegisterModal";
+import { VerificationModal } from "./modals/VerificationModal";
+import { SuccessModal } from "./modals/SuccessModal";
+import { ForgetModal } from "./modals/ForgetModal";
+import { ForgetVerifyModal } from "./modals/ForgetVerifyModal";
+import { NewPasswordModal } from "./modals/NewPasswordModal";
 import logo from "../assets/logo.svg";
-
 export const Home: React.FC = () => {
     const [isSubscriptionsOpen, setIsSubscriptionsOpen] = useState(false);
     const [isLanguageOpen, setIsLanguageOpen] = useState(false);
@@ -13,75 +15,25 @@ export const Home: React.FC = () => {
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
     const [isVerificationOpen, setIsVerificationOpen] = useState(false);
     const [email, setEmail] = useState("");
-    const [code, setCode] = useState("");
-    const [timer, setTimer] = useState(30);
-    const [isTimerRunning, setIsTimerRunning] = useState(false);
     const [isSuccessfulOpen, setIsSuccessfulOpen] = useState(false);
-
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
+    const [isForgetOpen, setIsForgetOpen] = useState(false);
+    const [isForgetVerify, setIsForgetVerify] = useState(false);
+    const [isNewPassword, setIsNewPassword] = useState(false);
     const handleLanguageChange = (language: string) => {
         setSelectedLanguage(language);
         setIsLanguageOpen(false);
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const form = e.target as HTMLFormElement;
-        const username = (form.username as HTMLInputElement).value.trim();
-        const email = (form.email as HTMLInputElement).value.trim();
-        const password = (form.password as HTMLInputElement).value.trim();
-        const isChecked = (form.terms as HTMLInputElement).checked;
-
-        if (username && email && password.length >= 8 && isChecked) {
-            setIsRegisterOpen(false);
-            setIsVerificationOpen(true);
-        }
-    };
-
-
-    const handleCodeChange = (e) => {
-        const inputCode = e.target.value;
-        if (inputCode.length <= 4) {
-            setCode(inputCode);
-        }
-    };
-
-    const handleVerifySubmit = (e) => {
-        e.preventDefault();
-        if (code.length === 4) {
-            setIsVerificationOpen(false);
-            setIsSuccessfulOpen(true);
-        }
-    };
-
-    const resendCode = () => {
-        if (!isTimerRunning) {
-            setIsTimerRunning(true);
-            setTimer(30);
-            const interval = setInterval(() => {
-                setTimer((prev) => {
-                    if (prev === 1) {
-                        clearInterval(interval);
-                        setIsTimerRunning(false);
-                    }
-                    return prev - 1;
-                });
-            }, 1000);
-        }
-    };
-
-
     return (
-        <header className="max-w-screen-xl m-auto pt-0.5 pb-0.5">
-            <nav className="flex justify-between items-center relative">
+        <header className="max-w-screen-xl m-auto px-0 sm:px-6 lg:px-0 sm:px-8">
+            <nav className="bg-white flex justify-between items-center relative z-50 sm:z-1 sm:shadow-none shadow-[0px_4px_4px_0px_#E3E3E333] px-6 py-3 lg:py-0.5">
                 <div className="flex gap-2">
                     <a href="#" className="flex gap-2 items-center font-semibold text-[#171717] logo__text">
-                        <img src={logo} alt="logo" />DiscountsOnServices
+                        <img src={logo} alt="logo" className="w-8 h-8 lg:w-full lg:h-full" />
+                        <span className="hidden sm:inline">DiscountsOnServices</span>
                     </a>
                 </div>
-                <div className="nav__btns">
+                <div className="nav__btns lg:block hidden">
                     <ul className="flex gap-12">
                         <li className="relative text-[#333]">
                             <button 
@@ -107,11 +59,11 @@ export const Home: React.FC = () => {
                     </ul>
                 </div>
                 <div className="flex gap-10 items-center">
-                    <div className="flex gap-4">
+                    <div className="flex gap-3.5 lg:flex hidden">
                         <i className="fa-brands fa-whatsapp text-[#333] text-2xl"></i>
                         <i className="fa-brands fa-telegram text-[#333] text-2xl"></i>
                     </div>
-                    <ul className="flex gap-12">
+                    <ul className="flex gap-12 lg:block hidden">
                         <li className="relative text-[#333]">
                             <button 
                                 onClick={() => setIsLanguageOpen(!isLanguageOpen)} 
@@ -133,33 +85,55 @@ export const Home: React.FC = () => {
                     </ul>
                     <button 
                         onClick={() => setIsModalOpen(true)} 
-                        className="bg-[#1749B3] rounded-xl cursor-pointer text-white font-bold px-10 py-2.5"
+                        className="bg-[#1749B3] rounded-xl cursor-pointer text-white font-bold px-10 py-2.5 lg:block hidden"
                     >
                         <span className="">Log in</span>
                     </button>
-                    {isModalOpen && 
-                        <LoginModal 
-                            setIsModalOpen={setIsModalOpen} 
-                            isRegisterOpen={isRegisterOpen} 
-                            setIsRegisterOpen={setIsRegisterOpen} 
-                        />}
-                    {isRegisterOpen && 
-                        <RegisterModal
-                            setIsRegisterOpen={setIsRegisterOpen}
-                            setIsModalOpen={setIsModalOpen}
-                            setIsVerificationOpen={setIsVerificationOpen}
-                        />
-                    }
-                    {isVerificationOpen && 
-                        <VerificationModal
-                            email={email}
-                            setIsVerificationOpen={setIsVerificationOpen}
-                            setIsSuccessfulOpen={setIsSuccessfulOpen}
-                        />
-                    }
-                    {isSuccessfulOpen && <SuccessModal setIsSuccessfulOpen={setIsSuccessfulOpen} />}
+                    <button 
+                        className="text-2xl text-[#070033] lg:hidden focus:outline-none"
+                    >
+                        <i className="fa-solid fa-bars"></i>
+                    </button>
                 </div>
             </nav>
+            {isModalOpen && 
+                <LoginModal 
+                    setIsModalOpen={setIsModalOpen} 
+                    setIsRegisterOpen={setIsRegisterOpen}
+                    setIsForgetOpen={setIsForgetOpen}
+                />}
+            {isRegisterOpen && 
+                <RegisterModal
+                    setIsRegisterOpen={setIsRegisterOpen}
+                    setIsModalOpen={setIsModalOpen}
+                    setIsVerificationOpen={setIsVerificationOpen}
+                />
+            }
+            {isVerificationOpen && 
+                <VerificationModal
+                    email={email}
+                    setIsVerificationOpen={setIsVerificationOpen}
+                    setIsSuccessfulOpen={setIsSuccessfulOpen}
+                />
+            }
+            {isSuccessfulOpen && <SuccessModal setIsSuccessfulOpen={setIsSuccessfulOpen} />}
+            {isForgetOpen && 
+                <ForgetModal 
+                    setIsForgetOpen={setIsForgetOpen}
+                    setIsForgetVerify={setIsForgetVerify}
+                />
+            }
+            {isForgetVerify && 
+                <ForgetVerifyModal 
+                    setIsForgetVerify={setIsForgetVerify} 
+                    setIsNewPassword={setIsNewPassword}
+                />
+            }
+            {isNewPassword &&
+                <NewPasswordModal
+                    setIsNewPassword={setIsNewPassword}
+                />
+            }
         </header>
     );
 };
