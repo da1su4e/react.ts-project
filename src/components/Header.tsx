@@ -25,8 +25,8 @@ export const Home: React.FC = () => {
     };
 
     return (
-        <header className="max-w-screen-xl m-auto px-0 sm:px-6 lg:px-0">
-            <nav className="bg-white flex justify-between items-center relative z-50 sm:z-1 sm:shadow-none shadow-[0px_4px_4px_0px_#E3E3E333] px-6 py-3 lg:py-0.5">
+        <header className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
+            <nav className="max-w-screen-xl m-auto flex justify-between items-center px-6 py-3">
                 <div className="flex gap-2">
                     <a href="#" className="flex gap-2 items-center font-semibold text-[#171717] logo__text">
                         <img src={logo} alt="logo" className="w-8 h-8 lg:w-full lg:h-full" />
